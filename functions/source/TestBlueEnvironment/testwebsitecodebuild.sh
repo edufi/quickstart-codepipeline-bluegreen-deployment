@@ -5,7 +5,7 @@ cname=$(aws elasticbeanstalk describe-environments --environment-names ${BlueEnv
 echo $cname
 if [ $cname ]
   then
-      status=$( curl -LI http://$cname -o /dev/null -w '%{http_code}\n' -s )
+      status=$( curl -LI http://$cname/api/heartbeat -o /dev/null -w '%{http_code}\n' -s )
   echo $status
   echo $BlueEnvName
   if [ ${status} = "200" ] || [ ${status} = "301" ]
