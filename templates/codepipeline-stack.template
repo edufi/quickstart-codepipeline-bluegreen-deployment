@@ -220,6 +220,8 @@ Resources:
             Principal:
               Service: codebuild.amazonaws.com
         Version: '2012-10-17'
+      ManagedPolicyArns:
+        - !Sub arn:${AWS::Partition}:iam::aws:policy/AmazonS3FullAccess
       Path: /
       Policies:
         - PolicyDocument:
@@ -285,7 +287,7 @@ Resources:
             Value: !Ref 'LambdaZipsBucket'
           - Name: BlueCNAMEConfigFile
             Value: bluecnameconfig.json
-        Image: aws/codebuild/ubuntu-base:14.04
+        Image: aws/codebuild/standard:4.0
         Type: LINUX_CONTAINER
       Name: !Ref UrlSwapCodeBuildServerName
       ServiceRole: !GetAtt 'BuildServiceRole.Arn'
@@ -307,7 +309,7 @@ Resources:
             Value: !Ref 'GreenEnvironmentName'
           - Name: BlueCNAMEConfigFile
             Value: bluecnameconfig.json
-        Image: aws/codebuild/ubuntu-base:14.04
+        Image: aws/codebuild/standard:4.0
         Type: LINUX_CONTAINER
       Name: CICDBlueDeploymentTest
       ServiceRole: !GetAtt 'BuildServiceRole.Arn'
@@ -339,6 +341,7 @@ Resources:
       ManagedPolicyArns:
         - !Sub arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
         - !Sub arn:${AWS::Partition}:iam::aws:policy/AdministratorAccess-AWSElasticBeanstalk
+        - !Sub arn:${AWS::Partition}:iam::aws:policy/AmazonS3FullAccess
       Path: /
       Policies:
         - PolicyDocument:

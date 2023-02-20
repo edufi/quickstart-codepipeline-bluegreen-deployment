@@ -10,7 +10,7 @@ then
 else
   Blueurl=$(cat $BlueCNAMEConfigFile |jq -r .BlueEnvUrl)
   echo $Blueurl
-  GreenCNAME=$(aws elasticbeanstalk describe-environments --environment-names $GreenEnvName --region $AWS_REGION --query Environments[0].CNAME --output text)
+  GreenCNAME=$(aws elasticbeanstalk describe-environments --environment-names $GreenEnvName --region $AWS_REGION --query 'Environments[0].CNAME' --output text)
   echo $GreenCNAME
   if [ $Blueurl = $GreenCNAME ];
   then
@@ -18,7 +18,7 @@ else
   else
     while true
     do
-    greenenvstatus=$(aws elasticbeanstalk describe-environments --environment-names $GreenEnvName --region $AWS_REGION --query Environments[0].Status --output text)
+    greenenvstatus=$(aws elasticbeanstalk describe-environments --environment-names $GreenEnvName --region $AWS_REGION --query 'Environments[0].Status' --output text)
     echo $greenenvstatus
     sleep 10s
     if [ $greenenvstatus = "Ready" ]
